@@ -11,31 +11,22 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function clickHeart(e) {
-
+let clickHeart = (e) => {
   mimicServerCall()
     .then(function (response) {
-
-      if (e.target.innerHTML.includes("activated-heart")) {
-
-        e.target.innerHTML = `Like! <span class="like-glyph">${EMPTY_HEART}</span>`
-
-
+      if (e.target.innerHTML.include('activated-heart')) {
+        e.target.innerHTML = `Like! <span class="like-glyph">${EMPTY_HEART}</span>`;
       } else {
-
-        e.target.innerHTML = `Like! <span class="like-glyph activated-heart">${FULL_HEART}</span>`
+        e.target.innerHTML = `Like! <span class='like-glyph'>${FULL_HEART}</span`;
       }
     })
     .catch((error) => {
-
-      document.getElementById("modal").className = ""
-
+      document.getElementById('modal').className = ''
       setTimeout(() => {
-        document.getElementById("modal").className = "hidden";
+        document.getElementById('modal').className = 'hidden';
       }, 5000);
-
-    })
-}
+    });
+};
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
 //------------------------------------------------------------------------------
