@@ -2,31 +2,38 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.addEventListener('click', (e) => {
-    if (e.target.classList.value === 'like') {
-      console.log(e);
-      // clickHeart(e);
-    };
-  });
-});
+let modal = document.querySelector('#modal')
+modal.style.visibility = 'hidden'
 
-let clickHeart = (e) => {
+let eachSpan = document.querySelectorAll('span.like-glyph')
+
+for (const oneSpan of eachSpan)  {
+  oneSpan.addEventListener('click', (e) => {
+    let heart = e.target
+    heart.innerText === EMPTY_HEART ? heart.innerText = FULL_HEART : heart.innerText = EMPTY_HEART
+    if (heart.innerText === FULL_HEART) {
+      heart.style.color = 'red'
+      heart.className = 'activated-heart'
+    } else {
+      heart.style.color = ''
+      heart.className = ''
+    }
+    sendRequest()
+  })
+}
+
+const sendRequest = () => {
   mimicServerCall()
-    .then(function (response) {
-      if (e.target.innerHTML.include('activated-heart')) {
-        e.target.innerHTML = `Like! <span class="like-glyph">${EMPTY_HEART}</span>`;
-      } else {
-        e.target.innerHTML = `Like! <span class='like-glyph'>${FULL_HEART}</span`;
-      }
-    })
-    .catch((error) => {
-      document.getElementById('modal').className = ''
+    .then(response => {})
+    .catch(error => {
+      modal.style.visibility = 'visible'
+      modal.innerText = error
       setTimeout(() => {
-        document.getElementById('modal').className = 'hidden';
+        modal.style.visibility = 'hidden'
       }, 5000);
-    });
-};
+    })
+}
+
 //------------------------------------------------------------------------------
 // Ignore after this point. Used only for demo purposes
 //------------------------------------------------------------------------------
